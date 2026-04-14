@@ -39,6 +39,12 @@ class GeminiInference:
             generation_config=generation_config,
         )
 
+    from openai import OpenAI
+    # self.model = OpenAI(
+    #     api_key="你的Gemini_API_KEY",
+    #     base_url="https://你的自定义URL/v1"  # 这里可以填 URL
+    # )
+
     def post_process(self, text):
         match = re.search(r"(?i)(?<=\banswer:\s).*", text)
         if match:

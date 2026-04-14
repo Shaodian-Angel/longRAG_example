@@ -26,7 +26,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     test_data = load_dataset("TIGER-Lab/LongRAG", args.test_data_name, split=args.test_data_split)
-    if args.reader_model == "GPT-4o":
+    if args.reader_model == "GPT":
         llm_inference = GPTInference()
     elif args.reader_model == "Gemini":
         llm_inference = GeminiInference()

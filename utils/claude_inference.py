@@ -7,12 +7,13 @@ import re
 class ClaudeInference:
     def __init__(self):
         self.client = anthropic.Anthropic(
-            api_key="",
+            api_key="XXX",
+            base_url="https://docs.newapi.pro/v1"
         )
 
     def predict(self, system_prompt, prompt):
         message = self.client.messages.create(
-            model="claude-3-5-sonnet-20240620",
+            model="claude-sonnet-4-6",
             max_tokens=1024,
             system=system_prompt,
             messages=[

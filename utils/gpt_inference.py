@@ -9,14 +9,14 @@ import re
 
 # 构造一个带有代理的 httpx 客户端
 http_client = httpx.Client(proxy="https://docs.newapi.pro/v1")
-AZURE_OPENAI_KEY = "sk-axOpH89b1bpdo1Pd9OU8G5gjfe2zMiqvSGKZXQcxiyAas2QQ"
+AZURE_OPENAI_KEY = "XXX"
 
 
 class GPTInference:
     def __init__(self):
         self.client = OpenAI(
             api_key=AZURE_OPENAI_KEY,  # 这里填入令牌
-            #base_url="https://docs.newapi.pro/v1"  # 注意：结尾只写到 /v1
+            #base_url=""  # 注意：结尾只写到 /v1
             http_client=http_client  # 将代理交给 http_client 处理
         )
 
@@ -34,7 +34,7 @@ class GPTInference:
         for attempt in range(retry):
             try:
                 response = self.client.chat.completions.create(
-                    model="gpt-4o",  # model = "deployment_name"
+                    model="gpt-5.4-pro",  # model = "deployment_name"
                     messages=message_text,
                     temperature=temperature,
                     max_tokens=max_tokens,
