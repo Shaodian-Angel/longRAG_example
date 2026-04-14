@@ -94,7 +94,7 @@ class GeminiInference:
         demo_prompt = "Here are some examples: "
         for item in demo_data.select(range(num_demo)):
             for answer in item["answers"]:
-                demo_prompt += f"Question: {item["question"]}\nLong Answer: {item["long_answer"]}\nShort Answer: {answer}\n\n"
+                demo_prompt += f"Question: {item['question']}\nLong Answer: {item['long_answer']}\nShort Answer: {answer}\n\n"
         return demo_prompt
 
     def extract_answer(self, question, long_answer):

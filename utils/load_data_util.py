@@ -1,6 +1,8 @@
 import csv
 import json
 import pickle
+
+from pandas._libs.parsers import defaultdict
 from tqdm import tqdm
 from utils.wiki_util import _normalize
 import pandas as pd

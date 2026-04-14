@@ -1,20 +1,24 @@
 import json
-from openai import AzureOpenAI
+
+import httpx
+from openai import AzureOpenAI, OpenAI
 from utils.load_data_util import load_json_file
 from datasets import load_dataset
 import time
 import re
 
-
-AZURE_OPENAI_KEY = ""
+# 构造一个带有代理的 httpx 客户端
+http_client = httpx.Client(proxy="https://docs.newapi.pro/v1")
+AZURE_OPENAI_KEY = "sk-axOpH89b1bpdo1Pd9OU8G5gjfe2zMiqvSGKZXQcxiyAas2QQ"
 
 
 class GPTInference:
     def __init__(self):
-        self.client = AzureOpenAI(
-            azure_endpoint="",
-            api_key=AZURE_OPENAI_KEY,
-            api_version="")
+        self.client = OpenAI(
+            api_key=AZURE_OPENAI_KEY,  # 这里填入令牌
+            #base_url="https://docs.newapi.pro/v1"  # 注意：结尾只写到 /v1
+            http_client=http_client  # 将代理交给 http_client 处理
+        )
 
     def post_process(self, text):
         match = re.search(r"(?i)(?<=\banswer:\s).*", text)
@@ -87,7 +91,7 @@ class GPTInference:
         demo_prompt = "Here are some examples: "
         for item in demo_data.select(range(num_demo)):
             for answer in item["answers"]:
-                demo_prompt += f"Question: {item["question"]}\nLong Answer: {item["long_answer"]}\nShort Answer: {answer}\n\n"
+                demo_prompt += f"Question: {item['question']}\nLong Answer: {item['long_answer']}\nShort Answer: {answer}\n\n"
         return demo_prompt
 
     def extract_answer(self, question, long_answer):

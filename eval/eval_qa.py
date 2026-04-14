@@ -1,6 +1,12 @@
 import argparse
 import json
 from tqdm import tqdm
+import sys
+import os
+
+# 将项目根目录添加到 sys.path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from utils.gpt_inference import GPTInference
 from utils.gemini_inference import GeminiInference
 from utils.claude_inference import ClaudeInference
