@@ -22,8 +22,12 @@ class HFDatasetRetrieval:
     """``rag_contracts.Retrieval`` backed by the pre-joined context in the
     HuggingFace ``TIGER-Lab/LongRAG`` dataset.
 
+    WARNING: This is benchmark scaffolding, NOT a real retrieval method.
     Each dataset item already has ``context`` and ``context_titles`` fields,
-    so "retrieval" is just a lookup keyed on the query.
+    so "retrieval" is just a lookup keyed on the query -- no corpus search
+    is performed.  Do not use for retrieval method comparisons.  For real
+    retrieval, see ``BM25Retrieval``, ``DenseRetrieval``, or ``HybridRetrieval``
+    in ``rag_contracts.retrieval_methods``.
     """
 
     dataset_name: str = "nq"
