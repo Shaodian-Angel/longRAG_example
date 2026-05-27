@@ -106,6 +106,9 @@ class LongRAGGeneration:
         if "hotpot" in instruction.lower():
             dataset = "hotpotqa"
 
+        import logging
+        _log = logging.getLogger(__name__)
+
         try:
             if dataset == "nq":
                 long_ans, short_ans = self.llm_inference.predict_nq(
@@ -115,8 +118,16 @@ class LongRAGGeneration:
                 long_ans, short_ans = self.llm_inference.predict_hotpotqa(
                     full_context, query, titles
                 )
-        except Exception:
-            long_ans, short_ans = "", ""
+        except Exception as exc:
+            _log.exception(
+                "LongRAGGeneration.predict_%s failed for query=%r dataset=%s",
+                dataset, query[:120], dataset,
+            )
+            raise RuntimeError(
+                f"LongRAGGeneration: predict_{dataset} failed "
+                f"({type(exc).__name__}: {exc}). "
+                f"Refusing to silently return empty answer."
+            ) from exc
 
         return GenerationResult(
             output=short_ans,
